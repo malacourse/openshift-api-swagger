@@ -8,6 +8,9 @@
   <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
   <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+  
+  
+  
   <style>
     html
     {
@@ -69,8 +72,11 @@
 
 <script src="./swagger-ui-bundle.js"> </script>
 <script src="./swagger-ui-standalone-preset.js"> </script>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" type="text/javascript"></script>
 <script>
 window.onload = function() {
+    
   
   // Build a system
   const ui = SwaggerUIBundle({
@@ -78,6 +84,9 @@ window.onload = function() {
     dom_id: '#swagger-ui',
     requestInterceptor: (req) => {
       oauthToken = document.getElementsByClassName("download-url-oauth")[0].value.trim()
+      alert(oauthToken);
+      oauthServer = document.getElementsByClassName("download-url-input")[0].value.trim()
+      alert(":" + oauthServer + ":");
       if(oauthToken.length > 0) {
         req.headers['Authorization'] = "Bearer " + oauthToken
       }
@@ -100,6 +109,27 @@ window.onload = function() {
   window.ui = ui
 }
 </script>
+  <script>
+    $(document).ready(function() {
+          $.ajax({url: "/token", success: function(result){
+          console.log(result);
+          $(".download-url-oauth").val(result);
+        }});    
+          $.ajax({url: "/server", success: function(result){
+          console.log(result);
+          $(".download-url-input").attr("placeholder", "");
+          $(".download-url-input").val(result);
+          
+
+        }});    
+
+          alert($(".download-url-input").html());
+          $(".download-url-button button").click();
+
+    });
+  </script>
+
+
 </body>
 
 </html>
