@@ -21,6 +21,6 @@ app.get('/token', function (req, res) {
   res.send(secr);
 });
 
-app.listen(9000, function () {
-  console.log('Example app listening on port 9000!');
+app.listen(8080, function () {
+  console.log('Example app listening on port 8080!');
 });
