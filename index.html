@@ -84,9 +84,6 @@ window.onload = function() {
     dom_id: '#swagger-ui',
     requestInterceptor: (req) => {
       oauthToken = document.getElementsByClassName("download-url-oauth")[0].value.trim()
-      alert(oauthToken);
-      oauthServer = document.getElementsByClassName("download-url-input")[0].value.trim()
-      alert(":" + oauthServer + ":");
       if(oauthToken.length > 0) {
         req.headers['Authorization'] = "Bearer " + oauthToken
       }
@@ -110,21 +107,26 @@ window.onload = function() {
 }
 </script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function() 
+    {
           $.ajax({url: "/token", success: function(result){
           console.log(result);
           $(".download-url-oauth").val(result);
         }});    
           $.ajax({url: "/server", success: function(result){
           console.log(result);
-          $(".download-url-input").attr("placeholder", "");
-          $(".download-url-input").val(result);
+          var myObj = document.getElementsByClassName("download-url-input")[0];
+          myObj.value = result;
+          var event = new Event('keydown');
+          myObj.dispatchEvent(event);
+          //myObj.select()
+         $(".download-url-input").trigger("onchange")
+          $(".download-url-button button").click();
           
 
         }});    
 
-          alert($(".download-url-input").html());
-          $(".download-url-button button").click();
+          
 
     });
   </script>
